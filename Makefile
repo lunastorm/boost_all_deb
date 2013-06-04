@@ -15,12 +15,14 @@ deb:	$(ROOT)
 	
 $(ROOT):	boost/stage debian/control
 	mkdir -p $(ROOT)/$(DEST)
+	mkdir -p $(ROOT)/usr/local/include
 	cp -rf boost/stage/* $(ROOT)/$(DEST)
 	mkdir -p $(ROOT)/DEBIAN
 	cp -rf debian/* $(ROOT)/DEBIAN/
 	sed -i -e 's/\$$VERSION/$(VERSION)/' $(ROOT)/DEBIAN/control
 	mkdir -p $(ROOT)/etc/ld.so.conf.d
 	echo "/$(DEST)/lib" > $(ROOT)/etc/ld.so.conf.d/libboost-all.conf
+	cp -rf boost/boost $(ROOT)/usr/local/include/
 
 boost/stage: $(TARBALL_NAME)
 	mkdir -p boost
